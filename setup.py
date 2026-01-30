@@ -4,14 +4,14 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name="agentwatch",
+    name="argus",
     version="0.1.0",
-    author="Your Name",
-    author_email="your.email@example.com",
+    author="Max",
+    author_email="max@example.com",
     description="Open Source Observability for AI Agents",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/agentwatch",
+    url="https://github.com/sh1esty1769/argus",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 3 - Alpha",
@@ -32,7 +32,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "agentwatch=agentwatch.cli:main",
+            "argus=argus.cli:main",
         ],
     },
 )

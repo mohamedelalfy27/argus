@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 """
-Quick demo of AgentWatch - run this to see it in action!
+Quick demo of Argus - run this to see it in action!
 """
 
 import sys
 sys.path.insert(0, '.')
 
-from agentwatch import watch
+from argus import watch
 import time
 import random
 
 
-print("🎬 AgentWatch Quick Demo")
+print("🎬 Argus Quick Demo")
 print("=" * 50)
 print()
 
@@ -92,10 +92,10 @@ print("🎯 Dashboard:")
 print("=" * 50)
 print()
 print("To view the dashboard, run:")
-print("  agentwatch dashboard")
+print("  argus dashboard")
 print()
 print("Or in Python:")
-print("  from agentwatch import watch")
+print("  from argus import watch")
 print("  watch.dashboard()")
 print()
 print("Then open: http://localhost:3000")

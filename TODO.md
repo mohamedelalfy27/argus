@@ -1,4 +1,4 @@
-# AgentWatch TODO
+# Argus TODO
 
 ## MVP (v0.1.0) ✅
 - [x] Core `@watch.agent()` decorator

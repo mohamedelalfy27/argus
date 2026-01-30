@@ -1,14 +1,14 @@
-# Contributing to AgentWatch
+# Contributing to Argus
 
-Thank you for your interest in contributing to AgentWatch! 🎉
+Thank you for your interest in contributing to Argus! 🎉
 
 ## Getting Started
 
 1. Fork the repository
 2. Clone your fork:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/AI-for-observability.git
-   cd AI-for-observability/agentwatch
+   git clone https://github.com/YOUR_USERNAME/argus.git
+   cd argus/argus
    ```
 3. Create a branch:
    ```bash
@@ -37,13 +37,13 @@ We use Black for formatting and follow PEP 8:
 
 ```bash
 # Format code
-black agentwatch/
+black argus/
 
 # Check linting
-flake8 agentwatch/
+flake8 argus/
 
 # Type checking
-mypy agentwatch/
+mypy argus/
 ```
 
 ## Pull Request Process
@@ -65,7 +65,7 @@ Open an issue with:
 
 Include:
 - Python version
-- AgentWatch version
+- Argus version
 - Minimal reproduction code
 - Expected vs actual behavior
 

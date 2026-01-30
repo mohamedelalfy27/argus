@@ -1,5 +1,5 @@
 """
-Storage layer - SQLite database for AgentWatch
+Storage layer - SQLite database for Argus
 """
 
 from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime, JSON, Text
@@ -41,9 +41,9 @@ class Call(Base):
 
 
 class Storage:
-    """SQLite storage for AgentWatch"""
+    """SQLite storage for Argus"""
     
-    def __init__(self, db_path: str = "agentwatch.db"):
+    def __init__(self, db_path: str = "argus.db"):
         self.engine = create_engine(f"sqlite:///{db_path}")
         Base.metadata.create_all(self.engine)
         self.Session = sessionmaker(bind=self.engine)

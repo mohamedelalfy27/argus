@@ -1,6 +1,6 @@
-# AgentWatch Examples
+# Argus Examples
 
-This directory contains example code showing how to use AgentWatch.
+This directory contains example code showing how to use Argus.
 
 ## Examples
 
@@ -37,7 +37,7 @@ python examples/openai_example.py
 All examples can be run directly:
 
 ```bash
-# From agentwatch directory
+# From argus directory
 python examples/basic_example.py
 python examples/openai_example.py
 ```
@@ -52,7 +52,7 @@ Each example will:
 Use these examples as templates:
 
 ```python
-from agentwatch import watch
+from argus import watch
 
 @watch.agent(name="your-agent", tags=["production"])
 def your_function(input_data):

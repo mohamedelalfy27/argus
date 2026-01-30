@@ -5,7 +5,7 @@ Tests for Watch class
 import pytest
 import tempfile
 import os
-from agentwatch import Watch
+from argus import Watch
 
 
 @pytest.fixture

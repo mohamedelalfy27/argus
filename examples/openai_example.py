@@ -2,7 +2,7 @@
 Example: OpenAI integration with cost tracking
 """
 
-from agentwatch import watch
+from argus import watch
 import os
 
 # Uncomment when you have OpenAI installed:
@@ -45,7 +45,7 @@ def ask_gpt(prompt: str, model: str = "gpt-3.5-turbo"):
 
 
 if __name__ == "__main__":
-    print("🤖 OpenAI + AgentWatch Example\n")
+    print("🤖 OpenAI + Argus Example\n")
     
     # Test calls
     prompts = [

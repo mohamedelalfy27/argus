@@ -1,5 +1,5 @@
 """
-Core Watch class - Main API for AgentWatch
+Core Watch class - Main API for Argus
 """
 
 import time
@@ -14,17 +14,17 @@ from .dashboard import start_dashboard
 
 class Watch:
     """
-    Main AgentWatch class
+    Main Argus class
     
     Usage:
-        from agentwatch import watch
+        from argus import watch
         
         @watch.agent(name="my-agent")
         def my_function():
             return "result"
     """
     
-    def __init__(self, db_path: str = "agentwatch.db"):
+    def __init__(self, db_path: str = "argus.db"):
         self.storage = Storage(db_path)
         self._active_calls = {}
     
@@ -72,10 +72,16 @@ class Watch:
                 error = None
                 output_data = None
                 status = "success"
+                calculated_cost = cost_per_call or 0.0
                 
                 try:
                     result = func(*args, **kwargs)
                     output_data = {"result": str(result)[:500]}
+                    
+                    # Extract cost from result if it's a dict with 'cost' key
+                    if isinstance(result, dict) and 'cost' in result:
+                        calculated_cost = result['cost']
+                    
                     return result
                     
                 except Exception as e:
@@ -86,7 +92,6 @@ class Watch:
                 finally:
                     # Calculate metrics
                     duration_ms = int((time.time() - start_time) * 1000)
-                    cost = cost_per_call or 0.0  # TODO: Auto-calculate
                     
                     # Log call
                     self.storage.log_call(
@@ -97,7 +102,7 @@ class Watch:
                         status=status,
                         error=error,
                         duration_ms=duration_ms,
-                        cost=cost,
+                        cost=calculated_cost,
                         timestamp=datetime.utcnow()
                     )
             

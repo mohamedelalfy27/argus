@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to AgentWatch will be documented in this file.
+All notable changes to Argus will be documented in this file.
 
 ## [0.1.0] - 2026-01-30
 
@@ -9,7 +9,7 @@ All notable changes to AgentWatch will be documented in this file.
 - `@watch.agent()` decorator for automatic tracking
 - SQLite storage backend
 - Flask dashboard with real-time updates
-- CLI tool (`agentwatch` command)
+- CLI tool (`argus` command)
 - Manual tracking with `watch.start()` and `watch.end()`
 - Statistics and analytics
 - Export to CSV/JSON

@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 """
-AgentWatch CLI - Command line interface
+Argus CLI - Command line interface
 """
 
 import argparse
 import sys
-from agentwatch import Watch
+from argus import Watch
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="AgentWatch - Open Source Observability for AI Agents"
+        description="Argus - Open Source Observability for AI Agents"
     )
     
     subparsers = parser.add_subparsers(dest="command", help="Commands")
@@ -26,8 +26,8 @@ def main():
     dashboard_parser.add_argument(
         "--db",
         type=str,
-        default="agentwatch.db",
-        help="Database path (default: agentwatch.db)"
+        default="argus.db",
+        help="Database path (default: argus.db)"
     )
     dashboard_parser.add_argument(
         "--debug",
@@ -45,8 +45,8 @@ def main():
     stats_parser.add_argument(
         "--db",
         type=str,
-        default="agentwatch.db",
-        help="Database path (default: agentwatch.db)"
+        default="argus.db",
+        help="Database path (default: argus.db)"
     )
     
     # List command
@@ -54,8 +54,8 @@ def main():
     list_parser.add_argument(
         "--db",
         type=str,
-        default="agentwatch.db",
-        help="Database path (default: agentwatch.db)"
+        default="argus.db",
+        help="Database path (default: argus.db)"
     )
     
     # Export command
@@ -75,8 +75,8 @@ def main():
     export_parser.add_argument(
         "--db",
         type=str,
-        default="agentwatch.db",
-        help="Database path (default: agentwatch.db)"
+        default="argus.db",
+        help="Database path (default: argus.db)"
     )
     
     args = parser.parse_args()
@@ -90,7 +90,7 @@ def main():
     
     # Execute command
     if args.command == "dashboard":
-        print(f"🚀 Starting AgentWatch Dashboard on http://localhost:{args.port}")
+        print(f"🚀 Starting Argus Dashboard on http://localhost:{args.port}")
         print("Press Ctrl+C to stop\n")
         watch.dashboard(port=args.port, debug=args.debug)
     

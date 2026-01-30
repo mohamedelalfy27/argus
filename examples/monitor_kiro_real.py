@@ -8,7 +8,7 @@ This shows how to wrap Kiro's operations to track:
 - Error rates
 """
 
-from agentwatch import watch
+from argus import watch
 from typing import Dict, Any
 import os
 
@@ -117,5 +117,5 @@ if __name__ == "__main__":
     kiro.export_logs("kiro_usage.csv")
     
     print("\n🎯 View dashboard:")
-    print("   agentwatch dashboard")
+    print("   argus dashboard")
     print("   Open: http://localhost:3000")

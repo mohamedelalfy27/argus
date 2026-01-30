@@ -1,6 +1,6 @@
-# Integrating AgentWatch with Kiro IDE
+# Integrating Argus with Kiro IDE
 
-AgentWatch can monitor Kiro AI assistant to track token usage, costs, and performance.
+Argus can monitor Kiro AI assistant to track token usage, costs, and performance.
 
 ## Why Monitor Kiro?
 
@@ -11,16 +11,16 @@ AgentWatch can monitor Kiro AI assistant to track token usage, costs, and perfor
 
 ## Quick Start
 
-### 1. Install AgentWatch
+### 1. Install Argus
 
 ```bash
-pip install agentwatch
+pip install argus
 ```
 
 ### 2. Wrap Kiro Operations
 
 ```python
-from agentwatch import watch
+from argus import watch
 
 @watch.agent(name="kiro-assistant")
 def ask_kiro(prompt: str):
@@ -35,7 +35,7 @@ result = ask_kiro("How do I use decorators?")
 ### 3. View Dashboard
 
 ```bash
-agentwatch dashboard
+argus dashboard
 ```
 
 Open http://localhost:3000 to see:
@@ -49,13 +49,13 @@ Open http://localhost:3000 to see:
 ### 1. Track Token Usage
 
 ```python
-from agentwatch import watch
+from argus import watch
 
 @watch.agent(name="kiro-chat", tags=["production"])
 def kiro_chat(message: str):
     response = kiro.chat(message)
     
-    # AgentWatch automatically logs:
+    # Argus automatically logs:
     # - Input message
     # - Response
     # - Duration
@@ -112,7 +112,7 @@ def kiro_file_op(operation: str, path: str):
 ## Advanced: Cost Tracking
 
 ```python
-from agentwatch import watch
+from argus import watch
 
 class KiroMonitor:
     @watch.agent(name="kiro-with-cost")
@@ -159,7 +159,7 @@ When monitoring Kiro, you'll see:
 ## Export Data
 
 ```python
-from agentwatch import watch
+from argus import watch
 
 # Export to CSV
 watch.export("kiro_usage.csv", format="csv")
@@ -174,16 +174,16 @@ Analyze in Excel, Python, or any data tool!
 
 ```bash
 # View stats
-agentwatch stats
+argus stats
 
 # Filter by Kiro operations
-agentwatch stats --agent kiro-assistant
+argus stats --agent kiro-assistant
 
 # List all Kiro agents
-agentwatch list
+argus list
 
 # Export data
-agentwatch export kiro_logs.csv
+argus export kiro_logs.csv
 ```
 
 ## Best Practices
@@ -208,7 +208,7 @@ Get notified when costs exceed threshold.
 ## Example: Full Integration
 
 ```python
-from agentwatch import watch
+from argus import watch
 
 class KiroAssistant:
     def __init__(self):
@@ -255,7 +255,7 @@ Make sure you're calling decorated functions.
 You need to manually calculate and log costs.
 
 ### Performance impact?
-AgentWatch adds <1ms overhead per call.
+Argus adds <1ms overhead per call.
 
 ## Examples
 

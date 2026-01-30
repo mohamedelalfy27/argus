@@ -1,8 +1,8 @@
 """
-Example: Using AgentWatch to monitor Kiro AI assistant
+Example: Using Argus to monitor Kiro AI assistant
 """
 
-from agentwatch import watch
+from argus import watch
 import time
 
 
@@ -77,7 +77,7 @@ def kiro_chat(user_message: str):
 
 
 if __name__ == "__main__":
-    print("🤖 Monitoring Kiro AI Assistant with AgentWatch\n")
+    print("🤖 Monitoring Kiro AI Assistant with Argus\n")
     
     # Simulate Kiro usage
     print("1. Kiro generates code...")
@@ -114,5 +114,5 @@ if __name__ == "__main__":
             print(f"     Cost: ${agent['total_cost']:.4f}")
     
     print("\n" + "=" * 50)
-    print("🎯 View dashboard: agentwatch dashboard")
+    print("🎯 View dashboard: argus dashboard")
     print("=" * 50)

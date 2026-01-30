@@ -21,7 +21,7 @@ A clear and concise description of what you expected to happen.
 **Environment:**
  - OS: [e.g. macOS, Linux, Windows]
  - Python version: [e.g. 3.9]
- - AgentWatch version: [e.g. 0.1.0]
+ - Argus version: [e.g. 0.1.0]
 
 **Additional context**
 Add any other context about the problem here.

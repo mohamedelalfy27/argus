@@ -1,5 +1,5 @@
 """
-AgentWatch - Open Source Observability for AI Agents
+Argus - Open Source Observability for AI Agents
 """
 
 from .watch import Watch

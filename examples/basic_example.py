@@ -1,8 +1,8 @@
 """
-Basic example demonstrating AgentWatch usage
+Basic example demonstrating Argus usage
 """
 
-from agentwatch import watch
+from argus import watch
 import time
 import random
 
@@ -39,7 +39,7 @@ def send_slack_message(channel: str, message: str):
 
 
 if __name__ == "__main__":
-    print("🚀 Running AgentWatch example...\n")
+    print("🚀 Running Argus example...\n")
     
     # Simulate some agent calls
     for i in range(10):
@@ -48,7 +48,7 @@ if __name__ == "__main__":
             result = send_email(
                 to=f"user{i}@example.com",
                 subject="Test Email",
-                body="Hello from AgentWatch!"
+                body="Hello from Argus!"
             )
             print(f"✅ Email sent: {result}\n")
         except Exception as e:

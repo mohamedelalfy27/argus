@@ -32,12 +32,12 @@
 ## 📁 Что на GitHub (публично)
 
 ```
-agentwatch/
+argus/
 ├── .github/
 │   ├── workflows/test.yml
 │   ├── ISSUE_TEMPLATE/
 │   └── PULL_REQUEST_TEMPLATE.md
-├── agentwatch/          # Основной код
+├── argus/          # Основной код
 ├── examples/            # Примеры
 ├── tests/              # Тесты
 ├── README.md           # Главная документация
@@ -76,7 +76,7 @@ agentwatch/
 ## 🚀 Что дальше
 
 ### 1. Проверь GitHub
-Зайди на https://github.com/sh1esty1769/AI-for-observability
+Зайди на https://github.com/sh1esty1769/argus
 
 Должно быть:
 - ✅ Чистый код
@@ -94,7 +94,7 @@ agentwatch/
 ### 3. Создай Release
 - Releases → Create new release
 - Tag: `v0.1.0`
-- Title: "AgentWatch v0.1.0 - Initial Release"
+- Title: "Argus v0.1.0 - Initial Release"
 - Описание из CHANGELOG.md
 
 ### 4. Загрузи на PyPI
@@ -116,7 +116,7 @@ twine upload dist/*
 
 ### Каждый день:
 ```bash
-cd agentwatch
+cd argus
 git pull                    # скачать изменения
 # пишешь код
 git status                  # проверить
@@ -153,7 +153,7 @@ git push -u origin feature-name
 ## 🎯 Приоритеты
 
 1. **ЕГЭ** - 80+ баллов (главное!)
-2. **AgentWatch** - поддержка (30 мин/день)
+2. **Argus** - поддержка (30 мин/день)
 3. **Новые фичи** - только на выходных
 
 ---

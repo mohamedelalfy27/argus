@@ -1,18 +1,18 @@
-# AgentWatch Quickstart
+# Argus Quickstart
 
-Get started with AgentWatch in 5 minutes.
+Get started with Argus in 5 minutes.
 
 ## Installation
 
 ```bash
-pip install agentwatch
+pip install argus
 ```
 
 Or install from source:
 
 ```bash
-git clone https://github.com/yourusername/agentwatch.git
-cd agentwatch
+git clone https://github.com/yourusername/argus.git
+cd argus
 pip install -e .
 ```
 
@@ -21,7 +21,7 @@ pip install -e .
 ### 1. Wrap Your Agent Function
 
 ```python
-from agentwatch import watch
+from argus import watch
 
 @watch.agent(name="my-agent")
 def my_ai_function(prompt: str):
@@ -32,16 +32,16 @@ def my_ai_function(prompt: str):
 result = my_ai_function("Hello!")
 ```
 
-That's it! AgentWatch is now tracking all calls.
+That's it! Argus is now tracking all calls.
 
 ### 2. View Dashboard
 
 ```bash
 # Start dashboard
-agentwatch dashboard
+argus dashboard
 
 # Or in Python
-from agentwatch import watch
+from argus import watch
 watch.dashboard(port=3000)
 ```
 
@@ -54,11 +54,11 @@ Open http://localhost:3000 to see:
 
 ```bash
 # CLI
-agentwatch stats
-agentwatch stats --agent my-agent
+argus stats
+argus stats --agent my-agent
 
 # Python
-from agentwatch import watch
+from argus import watch
 stats = watch.stats()
 print(stats)
 ```
@@ -66,7 +66,7 @@ print(stats)
 ## Real Example with OpenAI
 
 ```python
-from agentwatch import watch
+from argus import watch
 from openai import OpenAI
 
 client = OpenAI()
@@ -93,7 +93,7 @@ print(f"Total cost: ${stats['total_cost']:.4f}")
 For more control:
 
 ```python
-from agentwatch import watch
+from argus import watch
 
 # Start tracking
 call_id = watch.start(
@@ -116,19 +116,19 @@ watch.end(
 
 ```bash
 # Export to CSV
-agentwatch export data.csv
+argus export data.csv
 
 # Export to JSON
-agentwatch export data.json --format json
+argus export data.json --format json
 ```
 
 ## CLI Commands
 
 ```bash
-agentwatch dashboard          # Start dashboard
-agentwatch stats              # Show statistics
-agentwatch list               # List all agents
-agentwatch export <file>      # Export data
+argus dashboard          # Start dashboard
+argus stats              # Show statistics
+argus list               # List all agents
+argus export <file>      # Export data
 ```
 
 ## Next Steps
@@ -142,13 +142,13 @@ agentwatch export <file>      # Export data
 ### Port already in use
 
 ```bash
-agentwatch dashboard --port 3001
+argus dashboard --port 3001
 ```
 
 ### Database location
 
 ```bash
-agentwatch dashboard --db /path/to/custom.db
+argus dashboard --db /path/to/custom.db
 ```
 
 ## Need Help?

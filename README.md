@@ -1,6 +1,6 @@
 <div align="center">
 
-# 👁️ AgentWatch
+# 👁️ Argus
 
 ### Open Source Observability for AI Agents
 
@@ -10,9 +10,9 @@
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Twitter Follow](https://img.shields.io/twitter/follow/maxcodesai?style=social)](https://x.com/maxcodesai)
 
-[Quick Start](#-quick-start) • [Features](#-features) • [Examples](#-examples) • [Dashboard](#-dashboard) • [Integrations](#-integrations)
+[Quick Start](#-quick-start) • [Features](#-features) • [Examples](#-examples) • [Dashboard](#-dashboard)
 
-<img src="https://via.placeholder.com/800x400/667eea/ffffff?text=AgentWatch+Dashboard+Preview" alt="AgentWatch Dashboard" width="800"/>
+<img src="https://via.placeholder.com/800x400/667eea/ffffff?text=Argus+Dashboard+Preview" alt="Argus Dashboard" width="800"/>
 
 </div>
 
@@ -33,10 +33,12 @@ You're building AI agents with GPT-4, Claude, or local models. They work... but 
 
 ## ✨ The Solution
 
-**AgentWatch** - One decorator. Complete visibility.
+**Argus** - One decorator. Complete visibility.
+
+Named after the all-seeing giant from Greek mythology with 100 eyes, Argus watches over your AI agents.
 
 ```python
-from agentwatch import watch
+from argus import watch
 
 @watch.agent(name="my-agent")
 def my_ai_function(prompt: str):
@@ -58,13 +60,13 @@ def my_ai_function(prompt: str):
 ### Installation
 
 ```bash
-pip install agentwatch
+pip install argus
 ```
 
 ### Basic Usage
 
 ```python
-from agentwatch import watch
+from argus import watch
 
 @watch.agent(name="email-bot", tags=["production"])
 def send_email(to: str, subject: str):
@@ -84,7 +86,7 @@ result = send_email("user@example.com", "Meeting Tomorrow")
 ### View Dashboard
 
 ```bash
-agentwatch dashboard
+argus dashboard
 ```
 
 Open **http://localhost:3000** and see:
@@ -130,29 +132,12 @@ Works out of the box. No setup, no API keys, no hassle.
 
 ---
 
-## 📸 Dashboard Preview
-
-<div align="center">
-
-### Overview Stats
-<img src="https://via.placeholder.com/700x200/667eea/ffffff?text=Total+Calls+%7C+Cost+%7C+Errors+%7C+Avg+Duration" alt="Stats" width="700"/>
-
-### Per-Agent Metrics
-<img src="https://via.placeholder.com/700x250/764ba2/ffffff?text=Agent+Cards+with+Calls%2C+Cost%2C+Duration%2C+Errors" alt="Agents" width="700"/>
-
-### Recent Activity
-<img src="https://via.placeholder.com/700x300/667eea/ffffff?text=Real-time+Call+Log+with+Status%2C+Duration%2C+Cost" alt="Activity" width="700"/>
-
-</div>
-
----
-
 ## 💡 Examples
 
 ### OpenAI Integration
 
 ```python
-from agentwatch import watch
+from argus import watch
 from openai import OpenAI
 
 client = OpenAI()
@@ -187,7 +172,7 @@ print(f"Total spent: ${stats['total_cost']:.2f}")
 ### Multiple Agents
 
 ```python
-from agentwatch import watch
+from argus import watch
 
 @watch.agent(name="email-bot", tags=["production"])
 def send_email(to: str, subject: str):
@@ -219,7 +204,7 @@ print(f"Total cost: ${stats['total_cost']:.2f}")
 ### Error Tracking
 
 ```python
-from agentwatch import watch
+from argus import watch
 
 @watch.agent(name="risky-agent", tags=["experimental"])
 def risky_operation(data: dict):
@@ -243,7 +228,7 @@ print(f"Error rate: {stats['error_rate']*100:.1f}%")
 For more control:
 
 ```python
-from agentwatch import watch
+from argus import watch
 
 # Start tracking
 call_id = watch.start(
@@ -271,13 +256,13 @@ watch.end(
 
 ```bash
 # Default port (3000)
-agentwatch dashboard
+argus dashboard
 
 # Custom port
-agentwatch dashboard --port 8080
+argus dashboard --port 8080
 
 # Custom database
-agentwatch dashboard --db /path/to/custom.db
+argus dashboard --db /path/to/custom.db
 ```
 
 ### Features
@@ -294,114 +279,41 @@ agentwatch dashboard --db /path/to/custom.db
 
 ```bash
 # View statistics
-agentwatch stats
+argus stats
 
 # Filter by agent
-agentwatch stats --agent my-agent
+argus stats --agent my-agent
 
 # List all agents
-agentwatch list
+argus list
 
 # Export data
-agentwatch export data.csv
-agentwatch export data.json --format json
+argus export data.csv
+argus export data.json --format json
 
 # Start dashboard
-agentwatch dashboard --port 3000
+argus dashboard --port 3000
 ```
 
 ---
 
-## 🔌 Integrations
-
-### Kiro IDE
-
-Monitor your Kiro AI assistant:
-
-```python
-from agentwatch import watch
-
-@watch.agent(name="kiro-assistant", tags=["kiro", "production"])
-def ask_kiro(prompt: str):
-    response = kiro.process(prompt)
-    return response
-
-# Track: token usage, costs, response times, errors
-result = ask_kiro("How do I use decorators?")
-```
-
-See [`examples/kiro_integration.py`](examples/kiro_integration.py) and [`docs/KIRO_INTEGRATION.md`](docs/KIRO_INTEGRATION.md)
-
-### LangChain (Coming Soon)
-
-```python
-from agentwatch import watch
-from langchain import OpenAI
-
-@watch.agent(name="langchain-agent")
-def langchain_call(prompt: str):
-    llm = OpenAI()
-    return llm(prompt)
-```
-
-### LlamaIndex (Coming Soon)
-
-### AutoGPT (Coming Soon)
-
-### CrewAI (Coming Soon)
-
----
-
-## 📚 Documentation
-
-- [Quick Start Guide](QUICKSTART.md) - Get started in 5 minutes
-- [Kiro Integration](docs/KIRO_INTEGRATION.md) - Monitor Kiro AI assistant
-- [Examples](examples/) - Real-world usage examples
-- [Contributing](CONTRIBUTING.md) - How to contribute
-- [Changelog](CHANGELOG.md) - Version history
-- [Roadmap](TODO.md) - What's coming next
-
----
-
-## 🎯 Use Cases
-
-### 1. **Cost Control**
-Track API costs in real-time. Set budgets. Avoid surprise bills.
-
-### 2. **Performance Optimization**
-Find slow agents. Optimize bottlenecks. Improve user experience.
-
-### 3. **Error Monitoring**
-Catch failures instantly. Debug faster. Improve reliability.
-
-### 4. **Usage Analytics**
-Understand how agents are used. Make data-driven decisions.
-
-### 5. **Development**
-Debug agents during development. See what's happening under the hood.
-
-### 6. **Production Monitoring**
-Monitor agents in production. Get alerted on issues.
-
----
-
-## 🏆 Why AgentWatch?
+## 🏆 Why Argus?
 
 ### vs. Manual Logging
 - ❌ Manual: Write logging code everywhere
-- ✅ AgentWatch: One decorator
+- ✅ Argus: One decorator
 
 ### vs. Cloud Services
 - ❌ Cloud: Send data to third parties, pay monthly
-- ✅ AgentWatch: Local storage, free forever
+- ✅ Argus: Local storage, free forever
 
 ### vs. Building Your Own
 - ❌ DIY: Weeks of development, maintenance burden
-- ✅ AgentWatch: Install in 30 seconds, works out of the box
+- ✅ Argus: Install in 30 seconds, works out of the box
 
 ### vs. Nothing
 - ❌ Nothing: Flying blind, surprise bills, no debugging
-- ✅ AgentWatch: Complete visibility, cost control, easy debugging
+- ✅ Argus: Complete visibility, cost control, easy debugging
 
 ---
 
@@ -410,13 +322,13 @@ Monitor agents in production. Get alerted on issues.
 ### 1. Install
 
 ```bash
-pip install agentwatch
+pip install argus
 ```
 
 ### 2. Add Decorator
 
 ```python
-from agentwatch import watch
+from argus import watch
 
 @watch.agent(name="my-agent")
 def my_function():
@@ -426,7 +338,7 @@ def my_function():
 ### 3. View Dashboard
 
 ```bash
-agentwatch dashboard
+argus dashboard
 ```
 
 ### 4. Open Browser
@@ -450,12 +362,6 @@ We love contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 - 📖 Documentation improvements
 - 🌍 Internationalization
 
-### Contributors
-
-<a href="https://github.com/sh1esty1769/AI-for-observability/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=sh1esty1769/AI-for-observability" />
-</a>
-
 ---
 
 ## 🗺️ Roadmap
@@ -475,8 +381,8 @@ We love contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 ### v0.4.0 - Dashboard++
 - [ ] Advanced filtering
 - [ ] Charts and graphs
-- [ ] Dark mode
 - [ ] Export from dashboard
+- [ ] Real-time alerts
 
 ### v0.5.0 - Alerts
 - [ ] Cost threshold alerts
@@ -498,13 +404,13 @@ See [TODO.md](TODO.md) for full roadmap.
 
 <div align="center">
 
-![GitHub stars](https://img.shields.io/github/stars/sh1esty1769/AI-for-observability?style=social)
-![GitHub forks](https://img.shields.io/github/forks/sh1esty1769/AI-for-observability?style=social)
-![GitHub watchers](https://img.shields.io/github/watchers/sh1esty1769/AI-for-observability?style=social)
+![GitHub stars](https://img.shields.io/github/stars/sh1esty1769/argus?style=social)
+![GitHub forks](https://img.shields.io/github/forks/sh1esty1769/argus?style=social)
+![GitHub watchers](https://img.shields.io/github/watchers/sh1esty1769/argus?style=social)
 
-![GitHub issues](https://img.shields.io/github/issues/sh1esty1769/AI-for-observability)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/sh1esty1769/AI-for-observability)
-![GitHub last commit](https://img.shields.io/github/last-commit/sh1esty1769/AI-for-observability)
+![GitHub issues](https://img.shields.io/github/issues/sh1esty1769/argus)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/sh1esty1769/argus)
+![GitHub last commit](https://img.shields.io/github/last-commit/sh1esty1769/argus)
 
 </div>
 
@@ -512,8 +418,8 @@ See [TODO.md](TODO.md) for full roadmap.
 
 ## 💬 Community
 
-- **GitHub Discussions:** [Ask questions, share ideas](https://github.com/sh1esty1769/AI-for-observability/discussions)
-- **Issues:** [Report bugs, request features](https://github.com/sh1esty1769/AI-for-observability/issues)
+- **GitHub Discussions:** [Ask questions, share ideas](https://github.com/sh1esty1769/argus/discussions)
+- **Issues:** [Report bugs, request features](https://github.com/sh1esty1769/argus/issues)
 - **Twitter/X:** [@maxcodesai](https://x.com/maxcodesai)
 
 ---
@@ -537,9 +443,9 @@ Inspired by:
 
 ## 🔗 Links
 
-- **GitHub:** https://github.com/sh1esty1769/AI-for-observability
-- **Issues:** https://github.com/sh1esty1769/AI-for-observability/issues
-- **Discussions:** https://github.com/sh1esty1769/AI-for-observability/discussions
+- **GitHub:** https://github.com/sh1esty1769/argus
+- **Issues:** https://github.com/sh1esty1769/argus/issues
+- **Discussions:** https://github.com/sh1esty1769/argus/discussions
 - **Twitter/X:** [@maxcodesai](https://x.com/maxcodesai)
 
 ---
@@ -548,7 +454,7 @@ Inspired by:
 
 <div align="center">
 
-[![Star History Chart](https://api.star-history.com/svg?repos=sh1esty1769/AI-for-observability&type=Date)](https://star-history.com/#sh1esty1769/AI-for-observability&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=sh1esty1769/argus&type=Date)](https://star-history.com/#sh1esty1769/argus&Date)
 
 </div>
 
@@ -556,15 +462,15 @@ Inspired by:
 
 <div align="center">
 
-### **Stop flying blind. Start watching your agents.** 👁️
+### **Stop flying blind. Let Argus watch your agents.** 👁️
 
 **[Get Started Now](#-quick-start)** • **[View Examples](#-examples)** • **[Read Docs](#-documentation)**
 
 <br/>
 
-**If AgentWatch helps you, give us a ⭐ on GitHub!**
+**If Argus helps you, give us a ⭐ on GitHub!**
 
-[![GitHub stars](https://img.shields.io/github/stars/sh1esty1769/AI-for-observability.svg?style=social&label=Star)](https://github.com/sh1esty1769/AI-for-observability)
+[![GitHub stars](https://img.shields.io/github/stars/sh1esty1769/argus.svg?style=social&label=Star)](https://github.com/sh1esty1769/argus)
 
 <br/>
 
