@@ -1,11 +1,11 @@
 """
-Example with OpenAI integration
+Example: OpenAI integration with cost tracking
 """
 
 from agentwatch import watch
 import os
 
-# Uncomment when you have OpenAI installed
+# Uncomment when you have OpenAI installed:
 # from openai import OpenAI
 # client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 

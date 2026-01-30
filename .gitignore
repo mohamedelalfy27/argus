@@ -48,3 +48,13 @@ htmlcov/
 
 # Logs
 *.log
+
+# Personal guides (not for public repo)
+GIT_GUIDE.md
+GIT_CHEATSHEET.md
+GIT_COMMANDS_YOU_NEED.md
+START_HERE_RU.md
+NEXT_STEPS.md
+HOW_TO_LAUNCH.md
+LAUNCH_CHECKLIST.md
+PROJECT_STATUS.md

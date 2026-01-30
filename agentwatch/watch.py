@@ -1,5 +1,5 @@
 """
-Core Watch class - Main API
+Core Watch class - Main API for AgentWatch
 """
 
 import time

@@ -1,12 +1,19 @@
 # Contributing to AgentWatch
 
-Thanks for your interest in contributing! 🎉
+Thank you for your interest in contributing to AgentWatch! 🎉
 
 ## Getting Started
 
 1. Fork the repository
-2. Clone your fork: `git clone https://github.com/YOUR_USERNAME/agentwatch.git`
-3. Create a branch: `git checkout -b feature/your-feature-name`
+2. Clone your fork:
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/AI-for-observability.git
+   cd AI-for-observability/agentwatch
+   ```
+3. Create a branch:
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
 
 ## Development Setup
 
@@ -14,22 +21,29 @@ Thanks for your interest in contributing! 🎉
 # Install in development mode
 pip install -e .
 
-# Install dev dependencies
-pip install pytest black flake8
+# Install development dependencies
+pip install pytest black flake8 mypy
 ```
 
 ## Running Tests
 
 ```bash
-pytest tests/
+pytest tests/ -v
 ```
 
 ## Code Style
 
-We use Black for formatting:
+We use Black for formatting and follow PEP 8:
 
 ```bash
+# Format code
 black agentwatch/
+
+# Check linting
+flake8 agentwatch/
+
+# Type checking
+mypy agentwatch/
 ```
 
 ## Pull Request Process

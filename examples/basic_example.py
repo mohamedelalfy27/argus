@@ -1,5 +1,5 @@
 """
-Basic example of using AgentWatch
+Basic example demonstrating AgentWatch usage
 """
 
 from agentwatch import watch

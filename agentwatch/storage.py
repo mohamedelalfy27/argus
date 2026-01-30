@@ -1,10 +1,9 @@
 """
-Storage layer - SQLite database
+Storage layer - SQLite database for AgentWatch
 """
 
 from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime, JSON, Text
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import declarative_base, sessionmaker
 from datetime import datetime
 from typing import Dict, Any, List, Optional
 import json
