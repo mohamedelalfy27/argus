@@ -587,7 +587,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 **Add Argus to your AI agents in 30 seconds.**
 
 ```bash
-pip install git+https://github.com/sh1esty1769/argus.git
+pip install hundredeyes
 ```
 
 **[⭐ Star on GitHub](https://github.com/sh1esty1769/argus)** • **[📖 Read the Docs](https://github.com/sh1esty1769/argus/tree/main/docs)** • **[🐦 Follow Updates](https://x.com/maxcodesai)**
