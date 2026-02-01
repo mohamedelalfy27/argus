@@ -418,44 +418,11 @@ def analyze(data):
 
 Argus uses **async hooks** to track your agents with <1ms overhead.
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  Your Code                                                  │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │  @watch.agent(name="my-bot")                         │  │
-│  │  def my_agent(prompt):                               │  │
-│  │      return llm(prompt)  ←─────────────┐             │  │
-│  └──────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────┘
-                                              │
-                                              ↓
-                                    ┌─────────────────┐
-                                    │  Argus Hook     │
-                                    │  • Start timer  │
-                                    │  • Track input  │
-                                    └─────────────────┘
-                                              │
-                                              ↓ <1ms
-                                    ┌─────────────────┐
-                                    │  Async Queue    │
-                                    │  (non-blocking) │
-                                    └─────────────────┘
-                                              │
-                                              ↓
-                                    ┌─────────────────┐
-                                    │  SQLite DB      │
-                                    │  • Costs        │
-                                    │  • Latency      │
-                                    │  • Errors       │
-                                    │  • Traces       │
-                                    └─────────────────┘
-                                              │
-                                              ↓
-                                    ┌─────────────────┐
-                                    │  Dashboard      │
-                                    │  localhost:3001 │
-                                    └─────────────────┘
-```
+<div align="center">
+
+![How Argus Works](assets/how-it-works-diagram.png)
+
+</div>
 
 **Key principles:**
 1. **Async logging** — Your code doesn't wait for writes
