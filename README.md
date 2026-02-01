@@ -99,7 +99,7 @@ Get started in **30 seconds**:
 
 ```bash
 # 1. Install
-pip install git+https://github.com/sh1esty1769/argus.git
+pip install hundredeyes
 
 # 2. Add one decorator
 from argus import watch
