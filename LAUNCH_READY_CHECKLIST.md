@@ -9,7 +9,7 @@
 - [x] Collapsible Quick Start examples
 - [x] Detailed comparison table
 - [x] Use Cases section (4 scenarios)
-- [x] Visual "How It Works" diagram
+- [x] **Visual "How It Works" diagram (REAL IMAGE!)**
 - [x] Comprehensive FAQ (9 questions)
 - [x] Multiple CTAs
 - [x] LangChain integration guide
