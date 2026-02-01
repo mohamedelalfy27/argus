@@ -521,8 +521,8 @@ Yes! Argus has native LangChain integration via callbacks. One line of code and 
 <summary><b>What LLM providers are supported?</b></summary>
 
 Automatic cost calculation works with:
-- OpenAI (GPT-4, GPT-4o, GPT-3.5, o1)
-- Anthropic (Claude 3.5 Sonnet, Opus, Haiku)
+- OpenAI (GPT-5 family, GPT-4.1, GPT-4o, o1, GPT-Realtime)
+- Anthropic (Claude 4.5 Opus/Sonnet/Haiku, Claude 3.5)
 - Cohere (Command, Command-R)
 
 But you can track **any** LLM — just won't get automatic cost calculation.
