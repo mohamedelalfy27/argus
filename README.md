@@ -222,8 +222,8 @@ def ask(prompt):
 ```
 
 **Supported providers:**
-- OpenAI (GPT-4, GPT-4o, GPT-3.5, o1)
-- Anthropic (Claude 3.5 Sonnet, Opus, Haiku)
+- OpenAI (GPT-5, GPT-4.1, GPT-4o, o1, GPT-Realtime)
+- Anthropic (Claude 4.5 Opus/Sonnet/Haiku, Claude 3.5)
 - Cohere (Command, Command-R)
 
 **Real impact:** One user discovered 40% of calls could use GPT-3.5 instead of GPT-4 → **saved $1,200/month**.
