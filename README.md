@@ -19,10 +19,9 @@
 
 <div align="center">
 
-<!-- TODO: Replace with real dashboard screenshot or demo GIF -->
-![Argus Dashboard](https://via.placeholder.com/1000x500/0a0a0a/667eea?text=Argus+Dashboard+%E2%80%93+Coming+Soon)
+![Argus Dashboard](assets/dashboard-preview.png)
 
-**[📺 Watch Demo](https://github.com/sh1esty1769/argus) • [🚀 Try it Now](#-quick-start) • [⭐ Star on GitHub](https://github.com/sh1esty1769/argus)**
+**[🚀 Try it Now](#-quick-start) • [⭐ Star on GitHub](https://github.com/sh1esty1769/argus) • [📖 Read Docs](https://github.com/sh1esty1769/argus/tree/main/docs)**
 
 </div>
 
@@ -306,15 +305,14 @@ llm = ChatOpenAI(callbacks=[callback])
 
 **See everything at a glance.**
 
-<!-- TODO: Replace with real screenshot -->
-![Dashboard](https://via.placeholder.com/1000x500/0a0a0a/667eea?text=Dashboard+Screenshot)
+![Argus Dashboard](assets/dashboard-preview.png)
 
 **Features:**
 - Real-time updates (5s refresh)
 - Filter by agent, date, status
 - Search by input/output text
 - Export to CSV/JSON
-- Dark mode (default)
+- Light & Dark mode support
 
 ---
 
