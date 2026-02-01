@@ -5,10 +5,111 @@ Automatic cost calculation for LLM providers
 from typing import Optional, Dict, Any
 
 
-# OpenAI Pricing (as of January 2025)
+# OpenAI Pricing (as of February 2026)
 # https://openai.com/pricing
+# NOTE: All prices are per 1M tokens (not 1K!)
 OPENAI_PRICING = {
-    # GPT-4 Turbo
+    # GPT-5 Family (Latest)
+    "gpt-5.2": {
+        "input": 1.75 / 1_000_000,    # $1.75 per 1M input tokens
+        "output": 14.00 / 1_000_000,  # $14.00 per 1M output tokens
+    },
+    "gpt-5.1": {
+        "input": 1.25 / 1_000_000,
+        "output": 10.00 / 1_000_000,
+    },
+    "gpt-5": {
+        "input": 1.25 / 1_000_000,
+        "output": 10.00 / 1_000_000,
+    },
+    "gpt-5-mini": {
+        "input": 0.25 / 1_000_000,
+        "output": 2.00 / 1_000_000,
+    },
+    "gpt-5-nano": {
+        "input": 0.05 / 1_000_000,
+        "output": 0.40 / 1_000_000,
+    },
+    "gpt-5.2-pro": {
+        "input": 21.00 / 1_000_000,
+        "output": 168.00 / 1_000_000,
+    },
+    "gpt-5-pro": {
+        "input": 15.00 / 1_000_000,
+        "output": 120.00 / 1_000_000,
+    },
+    
+    # GPT-5 Specialized (Chat variants)
+    "gpt-5.2-chat-latest": {
+        "input": 1.75 / 1_000_000,
+        "output": 14.00 / 1_000_000,
+    },
+    "gpt-5.1-chat-latest": {
+        "input": 1.25 / 1_000_000,
+        "output": 10.00 / 1_000_000,
+    },
+    "gpt-5-chat-latest": {
+        "input": 1.25 / 1_000_000,
+        "output": 10.00 / 1_000_000,
+    },
+    
+    # GPT-5 Specialized (Codex variants)
+    "gpt-5.2-codex": {
+        "input": 1.75 / 1_000_000,
+        "output": 14.00 / 1_000_000,
+    },
+    "gpt-5.1-codex-max": {
+        "input": 1.25 / 1_000_000,
+        "output": 10.00 / 1_000_000,
+    },
+    "gpt-5.1-codex": {
+        "input": 1.25 / 1_000_000,
+        "output": 10.00 / 1_000_000,
+    },
+    "gpt-5-codex": {
+        "input": 1.25 / 1_000_000,
+        "output": 10.00 / 1_000_000,
+    },
+    
+    # GPT-4.1 Family
+    "gpt-4.1": {
+        "input": 2.00 / 1_000_000,
+        "output": 8.00 / 1_000_000,
+    },
+    "gpt-4.1-mini": {
+        "input": 0.40 / 1_000_000,
+        "output": 1.60 / 1_000_000,
+    },
+    "gpt-4.1-nano": {
+        "input": 0.10 / 1_000_000,
+        "output": 0.40 / 1_000_000,
+    },
+    
+    # GPT-4o (Omni)
+    "gpt-4o": {
+        "input": 2.50 / 1_000_000,
+        "output": 10.00 / 1_000_000,
+    },
+    "gpt-4o-2024-05-13": {
+        "input": 5.00 / 1_000_000,
+        "output": 15.00 / 1_000_000,
+    },
+    "gpt-4o-mini": {
+        "input": 0.15 / 1_000_000,
+        "output": 0.60 / 1_000_000,
+    },
+    
+    # GPT-Realtime (Voice)
+    "gpt-realtime": {
+        "input": 4.00 / 1_000_000,
+        "output": 16.00 / 1_000_000,
+    },
+    "gpt-realtime-mini": {
+        "input": 0.60 / 1_000_000,
+        "output": 2.40 / 1_000_000,
+    },
+    
+    # GPT-4 Turbo (Legacy)
     "gpt-4-turbo": {
         "input": 0.01 / 1000,   # $0.01 per 1K input tokens
         "output": 0.03 / 1000,  # $0.03 per 1K output tokens
