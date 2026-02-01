@@ -1,5 +1,5 @@
 """
-Flask dashboard for Argus
+Modern Flask dashboard for Argus - Professional UI/UX
 """
 
 from flask import Flask, render_template_string, jsonify, request
@@ -15,7 +15,8 @@ DASHBOARD_HTML = """
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         * { 
             margin: 0; 
@@ -24,176 +25,291 @@ DASHBOARD_HTML = """
         }
         
         :root {
-            --bg-primary: #0a0a0a;
-            --bg-secondary: #111111;
-            --bg-tertiary: #1a1a1a;
-            --border-color: #2a2a2a;
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0a0;
-            --text-tertiary: #666666;
-            --accent-primary: #3b82f6;
-            --accent-secondary: #8b5cf6;
-            --success: #10b981;
-            --error: #ef4444;
-            --warning: #f59e0b;
+            /* Modern color system - inspired by Vercel/Linear */
+            --bg-base: #fafafa;
+            --bg-surface: #ffffff;
+            --bg-elevated: #ffffff;
+            --bg-overlay: rgba(0, 0, 0, 0.02);
+            
+            --border-subtle: #eaeaea;
+            --border-default: #d4d4d4;
+            --border-strong: #a3a3a3;
+            
+            --text-primary: #171717;
+            --text-secondary: #737373;
+            --text-tertiary: #a3a3a3;
+            
+            --accent-blue: #0070f3;
+            --accent-purple: #7928ca;
+            --accent-pink: #ff0080;
+            --accent-green: #00d084;
+            --accent-orange: #f5a623;
+            --accent-red: #ff3b30;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            
+            --radius-sm: 6px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-base: #000000;
+                --bg-surface: #0a0a0a;
+                --bg-elevated: #111111;
+                --bg-overlay: rgba(255, 255, 255, 0.02);
+                
+                --border-subtle: #1a1a1a;
+                --border-default: #2a2a2a;
+                --border-strong: #3a3a3a;
+                
+                --text-primary: #ededed;
+                --text-secondary: #a3a3a3;
+                --text-tertiary: #737373;
+                
+                --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+                --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+                --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+                --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
+            }
         }
         
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--bg-primary);
+            background: var(--bg-base);
             color: var(--text-primary);
-            line-height: 1.6;
+            line-height: 1.5;
             min-height: 100vh;
-            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
-        /* Animated background */
-        body::before {
-            content: '';
-            position: fixed;
+        /* Layout */
+        .app {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 240px;
+            background: var(--bg-surface);
+            border-right: 1px solid var(--border-subtle);
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            position: sticky;
             top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: 0;
-        }
-        
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        /* Header */
-        .header {
-            margin-bottom: 48px;
-            animation: fadeInDown 0.6s ease-out;
+            height: 100vh;
         }
         
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
+            gap: 10px;
+            padding: 0 8px;
         }
         
         .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            border-radius: 10px;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 18px;
         }
         
         .logo-text {
-            font-size: 28px;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
         }
         
-        .tagline {
-            color: var(--text-secondary);
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        
+        .nav-item {
+            padding: 8px 12px;
+            border-radius: var(--radius-md);
             font-size: 14px;
-            margin-left: 52px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .nav-item:hover {
+            background: var(--bg-overlay);
+            color: var(--text-primary);
+        }
+        
+        .nav-item.active {
+            background: var(--bg-overlay);
+            color: var(--text-primary);
+        }
+        
+        .nav-icon {
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Main Content */
+        .main {
+            flex: 1;
+            padding: 32px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        /* Header */
+        .page-header {
+            margin-bottom: 32px;
+        }
+        
+        .page-title {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 4px;
+        }
+        
+        .page-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
         }
         
         /* Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-            animation: fadeInUp 0.6s ease-out 0.1s both;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
         }
         
         .stat-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 24px;
-            transition: all 0.3s ease;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            transition: all var(--transition-base);
             position: relative;
             overflow: hidden;
         }
         
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.05));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
         .stat-card:hover {
-            border-color: var(--accent-primary);
-            transform: translateY(-2px);
+            border-color: var(--border-default);
+            box-shadow: var(--shadow-sm);
+            transform: translateY(-1px);
         }
         
-        .stat-card:hover::before {
-            opacity: 1;
+        .stat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
         }
         
         .stat-label {
-            color: var(--text-secondary);
             font-size: 13px;
             font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            letter-spacing: -0.01em;
+        }
+        
+        .stat-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        
+        .stat-icon.blue { background: rgba(0, 112, 243, 0.1); }
+        .stat-icon.green { background: rgba(0, 208, 132, 0.1); }
+        .stat-icon.purple { background: rgba(121, 40, 202, 0.1); }
+        .stat-icon.orange { background: rgba(245, 166, 35, 0.1); }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
             margin-bottom: 8px;
         }
         
-        .stat-value {
-            font-size: 36px;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .stat-change {
+            font-size: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
+        
+        .stat-change.positive { color: var(--accent-green); }
+        .stat-change.negative { color: var(--accent-red); }
         
         /* Section */
         .section {
-            margin-bottom: 40px;
-            animation: fadeInUp 0.6s ease-out 0.2s both;
+            margin-bottom: 32px;
         }
         
         .section-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
         
         .section-title {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
-            color: var(--text-primary);
+            letter-spacing: -0.01em;
         }
         
-        .section-badge {
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            color: var(--text-secondary);
+        .section-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn {
+            padding: 6px 12px;
+            border-radius: var(--radius-md);
+            font-size: 13px;
             font-weight: 500;
+            border: 1px solid var(--border-default);
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .btn:hover {
+            border-color: var(--border-strong);
+            background: var(--bg-overlay);
         }
         
         /* Agent Cards */
@@ -203,50 +319,67 @@ DASHBOARD_HTML = """
         }
         
         .agent-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
             padding: 20px;
-            transition: all 0.3s ease;
+            transition: all var(--transition-base);
             cursor: pointer;
         }
         
         .agent-card:hover {
-            border-color: var(--accent-primary);
-            transform: translateX(4px);
+            border-color: var(--border-default);
+            box-shadow: var(--shadow-md);
         }
         
         .agent-header {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: space-between;
             margin-bottom: 16px;
+        }
+        
+        .agent-info {
+            flex: 1;
         }
         
         .agent-name {
             font-size: 16px;
             font-weight: 600;
-            color: var(--text-primary);
+            letter-spacing: -0.01em;
+            margin-bottom: 4px;
         }
         
         .agent-tags {
             display: flex;
             gap: 6px;
+            flex-wrap: wrap;
         }
         
         .tag {
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
             padding: 2px 8px;
-            border-radius: 6px;
+            border-radius: 4px;
             font-size: 11px;
+            font-weight: 500;
+            background: var(--bg-overlay);
             color: var(--text-secondary);
+            border: 1px solid var(--border-subtle);
+        }
+        
+        .agent-status {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            box-shadow: 0 0 0 3px rgba(0, 208, 132, 0.2);
         }
         
         .agent-metrics {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-subtle);
         }
         
         .metric {
@@ -257,75 +390,80 @@ DASHBOARD_HTML = """
         
         .metric-label {
             font-size: 11px;
+            font-weight: 500;
             color: var(--text-tertiary);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.05em;
         }
         
         .metric-value {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 600;
-            color: var(--text-primary);
+            letter-spacing: -0.01em;
         }
         
-        .metric-value.success {
-            color: var(--success);
+        .metric-value.success { color: var(--accent-green); }
+        .metric-value.error { color: var(--accent-red); }
+        
+        /* Activity Feed */
+        .activity-feed {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
         }
         
-        .metric-value.error {
-            color: var(--error);
+        .activity-item {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-subtle);
+            transition: background var(--transition-fast);
         }
         
-        /* Calls List */
-        .calls-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+        .activity-item:last-child {
+            border-bottom: none;
         }
         
-        .call-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-left: 3px solid var(--success);
-            border-radius: 8px;
-            padding: 16px;
-            transition: all 0.2s ease;
+        .activity-item:hover {
+            background: var(--bg-overlay);
         }
         
-        .call-card.error {
-            border-left-color: var(--error);
-        }
-        
-        .call-card:hover {
-            background: var(--bg-tertiary);
-        }
-        
-        .call-header {
+        .activity-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 8px;
         }
         
-        .call-agent {
+        .activity-agent {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             font-size: 14px;
-            font-weight: 600;
-            color: var(--text-primary);
+            font-weight: 500;
         }
         
-        .call-time {
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+        
+        .status-dot.success { background: var(--accent-green); }
+        .status-dot.error { background: var(--accent-red); }
+        
+        .activity-time {
             font-size: 12px;
             color: var(--text-tertiary);
         }
         
-        .call-metrics {
+        .activity-metrics {
             display: flex;
             gap: 16px;
             font-size: 12px;
             color: var(--text-secondary);
         }
         
-        .call-metric {
+        .activity-metric {
             display: flex;
             align-items: center;
             gap: 4px;
@@ -335,116 +473,180 @@ DASHBOARD_HTML = """
         .empty-state {
             text-align: center;
             padding: 60px 20px;
-            color: var(--text-tertiary);
         }
         
         .empty-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-            opacity: 0.5;
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 16px;
+            background: var(--bg-overlay);
+            border-radius: var(--radius-xl);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+        
+        .empty-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
         }
         
         .empty-text {
             font-size: 14px;
+            color: var(--text-secondary);
         }
         
         /* Animations */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Status Indicator */
-        .status-indicator {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            margin-right: 6px;
-        }
-        
-        .status-indicator.success {
-            background: var(--success);
-            box-shadow: 0 0 8px var(--success);
-        }
-        
-        .status-indicator.error {
-            background: var(--error);
-            box-shadow: 0 0 8px var(--error);
+        .fade-in {
+            animation: fadeIn 0.3s ease-out;
         }
         
         /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 200px;
+            }
+        }
+        
         @media (max-width: 768px) {
-            .agent-metrics {
-                grid-template-columns: repeat(2, 1fr);
+            .sidebar {
+                display: none;
+            }
+            
+            .main {
+                padding: 20px;
             }
             
             .stats-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .agent-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
+    <div class="app">
+        <!-- Sidebar -->
+        <div class="sidebar">
             <div class="logo">
                 <div class="logo-icon">👁️</div>
                 <div class="logo-text">Argus</div>
             </div>
-            <div class="tagline">Real-time observability for AI agents</div>
+            
+            <nav class="nav">
+                <div class="nav-item active">
+                    <div class="nav-icon">📊</div>
+                    <span>Overview</span>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">🤖</div>
+                    <span>Agents</span>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">📞</div>
+                    <span>Activity</span>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">💰</div>
+                    <span>Costs</span>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">⚠️</div>
+                    <span>Errors</span>
+                </div>
+            </nav>
         </div>
 
-        <!-- Stats Grid -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-label">Total Agents</div>
-                <div class="stat-value" id="total-agents">0</div>
+        <!-- Main Content -->
+        <div class="main">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">Overview</h1>
+                <p class="page-subtitle">Real-time observability for your AI agents</p>
             </div>
-            <div class="stat-card">
-                <div class="stat-label">Total Calls</div>
-                <div class="stat-value" id="total-calls">0</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Total Cost</div>
-                <div class="stat-value" id="total-cost">$0.00</div>
-            </div>
-        </div>
 
-        <!-- Agents Section -->
-        <div class="section">
-            <div class="section-header">
-                <div class="section-title">Agents</div>
-                <div class="section-badge" id="agents-count">0 active</div>
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card fade-in">
+                    <div class="stat-header">
+                        <div class="stat-label">Total Agents</div>
+                        <div class="stat-icon blue">🤖</div>
+                    </div>
+                    <div class="stat-value" id="total-agents">0</div>
+                    <div class="stat-change positive">
+                        <span>↗</span>
+                        <span>Active now</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card fade-in" style="animation-delay: 0.05s">
+                    <div class="stat-header">
+                        <div class="stat-label">Total Calls</div>
+                        <div class="stat-icon green">📞</div>
+                    </div>
+                    <div class="stat-value" id="total-calls">0</div>
+                    <div class="stat-change positive">
+                        <span>↗</span>
+                        <span>Last 24h</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card fade-in" style="animation-delay: 0.1s">
+                    <div class="stat-header">
+                        <div class="stat-label">Total Cost</div>
+                        <div class="stat-icon purple">💰</div>
+                    </div>
+                    <div class="stat-value" id="total-cost">$0.00</div>
+                    <div class="stat-change">
+                        <span>All time</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card fade-in" style="animation-delay: 0.15s">
+                    <div class="stat-header">
+                        <div class="stat-label">Avg Latency</div>
+                        <div class="stat-icon orange">⚡</div>
+                    </div>
+                    <div class="stat-value" id="avg-latency">0ms</div>
+                    <div class="stat-change positive">
+                        <span>↗</span>
+                        <span>Improving</span>
+                    </div>
+                </div>
             </div>
-            <div class="agents-grid" id="agents-container"></div>
-        </div>
 
-        <!-- Recent Calls Section -->
-        <div class="section">
-            <div class="section-header">
-                <div class="section-title">Recent Activity</div>
-                <div class="section-badge" id="calls-count">0 calls</div>
+            <!-- Agents Section -->
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Active Agents</h2>
+                    <div class="section-actions">
+                        <button class="btn">Filter</button>
+                        <button class="btn">Sort</button>
+                    </div>
+                </div>
+                <div class="agents-grid" id="agents-container"></div>
             </div>
-            <div class="calls-list" id="calls-container"></div>
+
+            <!-- Recent Activity -->
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Recent Activity</h2>
+                    <div class="section-actions">
+                        <button class="btn">View All</button>
+                    </div>
+                </div>
+                <div class="activity-feed" id="activity-container"></div>
+            </div>
         </div>
     </div>
 
@@ -459,28 +661,36 @@ DASHBOARD_HTML = """
                 document.getElementById('total-calls').textContent = (stats.total_calls || 0).toLocaleString();
                 document.getElementById('total-cost').textContent = '$' + (stats.total_cost || 0).toFixed(2);
                 
-                // Load agents
+                // Calculate avg latency
                 const agentsRes = await fetch('/api/agents');
                 const agents = await agentsRes.json();
                 
-                document.getElementById('agents-count').textContent = `${agents.length} active`;
+                if (agents.length > 0) {
+                    const avgLatency = agents.reduce((sum, a) => sum + a.avg_duration_ms, 0) / agents.length;
+                    document.getElementById('avg-latency').textContent = Math.round(avgLatency) + 'ms';
+                }
                 
+                // Load agents
                 const agentsContainer = document.getElementById('agents-container');
                 if (agents.length === 0) {
                     agentsContainer.innerHTML = `
                         <div class="empty-state">
                             <div class="empty-icon">🤖</div>
-                            <div class="empty-text">No agents yet. Start using @watch.agent() decorator!</div>
+                            <div class="empty-title">No agents yet</div>
+                            <div class="empty-text">Start using @watch.agent() decorator to track your AI agents</div>
                         </div>
                     `;
                 } else {
-                    agentsContainer.innerHTML = agents.map(agent => `
-                        <div class="agent-card">
+                    agentsContainer.innerHTML = agents.map((agent, i) => `
+                        <div class="agent-card fade-in" style="animation-delay: ${i * 0.05}s">
                             <div class="agent-header">
-                                <div class="agent-name">${agent.name}</div>
-                                <div class="agent-tags">
-                                    ${(agent.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('')}
+                                <div class="agent-info">
+                                    <div class="agent-name">${agent.name}</div>
+                                    <div class="agent-tags">
+                                        ${(agent.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('')}
+                                    </div>
                                 </div>
+                                <div class="agent-status"></div>
                             </div>
                             <div class="agent-metrics">
                                 <div class="metric">
@@ -488,8 +698,8 @@ DASHBOARD_HTML = """
                                     <div class="metric-value">${agent.total_calls.toLocaleString()}</div>
                                 </div>
                                 <div class="metric">
-                                    <div class="metric-label">Avg Time</div>
-                                    <div class="metric-value">${agent.avg_duration_ms.toFixed(0)}ms</div>
+                                    <div class="metric-label">Latency</div>
+                                    <div class="metric-value">${Math.round(agent.avg_duration_ms)}ms</div>
                                 </div>
                                 <div class="metric">
                                     <div class="metric-label">Cost</div>
@@ -505,35 +715,45 @@ DASHBOARD_HTML = """
                 }
                 
                 // Load recent calls
-                const callsRes = await fetch('/api/calls?limit=20');
+                const callsRes = await fetch('/api/calls?limit=10');
                 const calls = await callsRes.json();
                 
-                document.getElementById('calls-count').textContent = `${calls.length} calls`;
-                
-                const callsContainer = document.getElementById('calls-container');
+                const activityContainer = document.getElementById('activity-container');
                 if (calls.length === 0) {
-                    callsContainer.innerHTML = `
+                    activityContainer.innerHTML = `
                         <div class="empty-state">
                             <div class="empty-icon">📞</div>
-                            <div class="empty-text">No calls yet.</div>
+                            <div class="empty-title">No activity yet</div>
+                            <div class="empty-text">Agent calls will appear here</div>
                         </div>
                     `;
                 } else {
-                    callsContainer.innerHTML = calls.map(call => {
+                    activityContainer.innerHTML = calls.map(call => {
                         const timeAgo = getTimeAgo(new Date(call.timestamp));
                         return `
-                            <div class="call-card ${call.status === 'error' ? 'error' : ''}">
-                                <div class="call-header">
-                                    <div class="call-agent">
-                                        <span class="status-indicator ${call.status === 'error' ? 'error' : 'success'}"></span>
-                                        ${call.agent_name}
+                            <div class="activity-item">
+                                <div class="activity-header">
+                                    <div class="activity-agent">
+                                        <span class="status-dot ${call.status === 'error' ? 'error' : 'success'}"></span>
+                                        <span>${call.agent_name}</span>
                                     </div>
-                                    <div class="call-time">${timeAgo}</div>
+                                    <div class="activity-time">${timeAgo}</div>
                                 </div>
-                                <div class="call-metrics">
-                                    <div class="call-metric">⚡ ${call.duration_ms}ms</div>
-                                    <div class="call-metric">💰 $${call.cost.toFixed(4)}</div>
-                                    ${call.error ? `<div class="call-metric">⚠️ ${call.error}</div>` : ''}
+                                <div class="activity-metrics">
+                                    <div class="activity-metric">
+                                        <span>⚡</span>
+                                        <span>${call.duration_ms}ms</span>
+                                    </div>
+                                    <div class="activity-metric">
+                                        <span>💰</span>
+                                        <span>$${call.cost.toFixed(4)}</span>
+                                    </div>
+                                    ${call.error ? `
+                                        <div class="activity-metric">
+                                            <span>⚠️</span>
+                                            <span>${call.error}</span>
+                                        </div>
+                                    ` : ''}
                                 </div>
                             </div>
                         `;
@@ -565,7 +785,7 @@ DASHBOARD_HTML = """
 
 
 def start_dashboard(storage: Storage, port: int = 3000, debug: bool = False):
-    """Start Flask dashboard"""
+    """Start Flask dashboard with modern UI"""
     app = Flask(__name__)
     
     @app.route('/')
